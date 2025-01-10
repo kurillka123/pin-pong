@@ -5,32 +5,31 @@ import random
 
 
 class Ball(pygame.sprite.Sprite):
-    width = 35
-    height = 35
-    speed = 3
+    width = 30
+    height = 30
+    speed = 5
 
     def __init__(self, scene) -> None:
         super().__init__()
         self.scene = scene
         self.velocity_x = 0
         self.velocity_y = 0
-        self.angle = 60 # углы в градусах
+        self.angle = 60  # углы в градусах
         self.color = config.WHITE
         self.speed = Ball.speed
 
         screen_width, screen_height = self.scene.game.screen.get_size()
         min_side = min(screen_width, screen_height)
-        width =  int(min_side * 0.03)
+        width = int(min_side * 0.03)
         height = int(min_side * 0.03)
         self.image = pygame.Surface((width, height))
         self.image.fill(self.color)
         self.rect = self.image.get_rect()
         self.goto_start()
-        self.sounds = { 
+        self.sounds = {
             'collide': pygame.mixer.Sound(config.SOUNDS_DIR / 'collide.wav'),
             'win': pygame.mixer.Sound(config.SOUNDS_DIR / 'win.wav'),
             'loose': pygame.mixer.Sound(config.SOUNDS_DIR / 'loose.wav')
-                      
         }
         self.scene.all_sprites.add(self)
 
@@ -49,7 +48,6 @@ class Ball(pygame.sprite.Sprite):
         '''столкновение с экраном'''
         if self.rect.top > 0 and self.rect.bottom < self.scene.game.window_height:
             return
-        
         self.angle *= -1
         self.angle += 180
         self.sounds['collide'].play()
@@ -67,7 +65,7 @@ class Ball(pygame.sprite.Sprite):
         self.collide_rackets()
 
     def check_goal(self) -> None:
-        if self.rect.right >  self.scene.game.window_width:
+        if self.rect.right > self.scene.game.window_width:
             self.scene.score_left.value += 1
             self.goto_start()
             self.scene.racket_left.goto_start()

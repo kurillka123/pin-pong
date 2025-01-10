@@ -1,8 +1,9 @@
 import config  # импорт файла config
 import pygame  # импорт модуля pygame
-from scene import GameplayScene, MenuScene
+from scene import MenuScene, GameplayScene
 
-class  Game:
+
+class Game:
     def __init__(self) -> None:
         pygame.init()
         pygame.mixer.init()
@@ -13,11 +14,11 @@ class  Game:
             (self.window_width, self.window_height)
         )
         self.scene = GameplayScene(self)
-        self.is_running = True  
+        self.is_running = True
         self.keys_pressed = None
         print(self.keys_pressed)
-        self.clock = pygame.time.Clock()  
-          
+        self.clock = pygame.time.Clock()
+
     def main_loop(self) -> None:
         while self.is_running:
             '''
@@ -31,7 +32,7 @@ class  Game:
             self.scene.render()  # вызов функции render
             self.clock.tick(config.FPS)
         pygame.quit()
-                    
+
     def update(self) -> None:
         self.scene.all_sprites.update()
 

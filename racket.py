@@ -6,7 +6,7 @@ import pygame
 class Racket(ABC, pygame.sprite.Sprite):
     @abstractmethod
     def __init__(
-            self, 
+            self,
             center_x: int,
             scene
     ):
@@ -15,9 +15,9 @@ class Racket(ABC, pygame.sprite.Sprite):
         self.center_x = center_x
         self.color = config.WHITE
         self.speed = 5
-        screen_width, screen_height= self.scene.game.screen.get_size()
+        screen_width, screen_height = self.scene.game.screen.get_size()
         min_side = min(screen_width, screen_height)
-        Racket.width =  int(min_side * 0.05)
+        Racket.width = int(min_side * 0.05)
         Racket.height = int(min_side * 0.2)
         self.image = pygame.Surface((Racket.width, Racket.height))
         self.image.fill(self.color)
@@ -30,7 +30,7 @@ class Racket(ABC, pygame.sprite.Sprite):
     def goto_start(self):
         self.rect.centerx = self.center_x
         self.rect.centery = self.scene.game.window_height // 2
-    
+
     def move():
         pass
 
@@ -58,7 +58,7 @@ class RacketAuto(Racket):
             elif self.scene.ball.rect.centery > self.rect.centery:
                 self.rect.centery += self.speed
             self.last_move = pygame.time.get_ticks()
-    
+
 
 class RacketManual(Racket):
     def __init__(self, center_x, key_up, key_down, scene):
@@ -69,7 +69,6 @@ class RacketManual(Racket):
     def move(self):
         if not self.scene.keys_pressed:
             return
-        
         if self.scene.keys_pressed[self.key_down]:
             self.rect.y += self.speed
         elif self.scene.keys_pressed[self.key_up]:
